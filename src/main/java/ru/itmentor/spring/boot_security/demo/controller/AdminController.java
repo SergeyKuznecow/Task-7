@@ -2,64 +2,50 @@ package ru.itmentor.spring.boot_security.demo.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.itmentor.spring.boot_security.demo.model.Person;
 import ru.itmentor.spring.boot_security.demo.service.PersonService;
 
+import java.util.List;
 
-@Controller
+
+@RestController
 @RequestMapping("/admin")
 public class AdminController {
     private PersonService personService;
 
     @Autowired
     public AdminController(PersonService personService) {
-
         this.personService = personService;
     }
 
     @GetMapping()
-    public String getAllUsers(ModelMap model) {
-        model.addAttribute("people", personService.getAllUsers());
-        return "show_all";
+    public ResponseEntity<List<Person>> getAllUsers() {
+        return ResponseEntity.ok(personService.getAllUsers());
     }
 
     @GetMapping("/{id}")
-    public String getUserById(@PathVariable("id") Long id, ModelMap model) {
-        model.addAttribute("person", personService.getUserById(id));
-        return "show";
+    public ResponseEntity<Person> getUserById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(personService.getUserById(id));
     }
 
-    @GetMapping("/new")
-    public String createNewPerson(@ModelAttribute("person") Person person) {
-        return "new";
-    }
-
-    @PostMapping()
-    public String create(@ModelAttribute("person") Person person) {
+    @PostMapping("/create")
+    public ResponseEntity<Person> create(@RequestBody Person person) {
         personService.addPerson(person);
-        return "show_all";
+        return ResponseEntity.ok(person);
     }
 
-    @GetMapping("/{id}/edit")
-    public String edit(ModelMap model, @PathVariable("id") Long id) {
-        model.addAttribute("person", personService.getUserById(id));
-        return "edit";
-    }
-
-    @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") Person person, @PathVariable("id") Long id) {
+    @PatchMapping("/update")
+    public ResponseEntity<Person> update(@RequestBody Person person) {
         personService.updateUser(person);
-        return "redirect:/admin";
+        return ResponseEntity.ok(person);
     }
 
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") Long id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Person> delete(@PathVariable("id") Long id) {
         personService.removeUser(id);
-        return "redirect:/admin";
+        return ResponseEntity.ok().build();
     }
-
 
 }
