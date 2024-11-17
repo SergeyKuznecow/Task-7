@@ -8,13 +8,8 @@ import ru.itmentor.spring.boot_security.demo.model.User;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
     User findByUsername(String username);
-
-    @Query("SELECT u FROM User u JOIN FETCH u.roles")
+    @Query("SELECT u FROM User u JOIN FETCH u.roles r")
     List<User> listUsersAndRoles();
-
-    List<User> findByUsernameContainingOrEmailContaining(String username, String email);
-
-    User findByEmail(String email);
 }

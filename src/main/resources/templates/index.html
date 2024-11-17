@@ -1,11 +1,61 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8">
+    <title>Добро пожаловать в HR</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #F4F6F7;
+        }
+
+        .logo {
+            font-family: Arial, sans-serif;
+            font-size: 100px;
+            font-weight: bold;
+            color: #2980B9;
+            background: beige;
+            padding: 40px;
+            border-radius: 10px;
+            display: inline-block;
+            text-align: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 800px;
+            margin-bottom: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            background-color: #2980B9;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #1E6BB2;
+        }
+    </style>
 </head>
 <body>
-<h1>Welcome to Index PAGE!</h1>
-
-
+<header>
+    Добро пожаловать в HR!
+</header>
+<br/>
+<div class="logo" th:text="'HR'"></div>
+<br/>
+<form action="/login">
+    <input type="submit" class="button" value="Войти">
+</form>
 </body>
 </html>
